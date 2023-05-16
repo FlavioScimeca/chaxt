@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import AuthForm from '../components/AuthForm';
 
 export default function Home() {
   return (
@@ -9,13 +10,14 @@ export default function Home() {
           src="/images/chaxt.png"
           height="100"
           width="100"
-          className="w-auto mx-auto"
+          className="w-auto mx-auto rounded-lg"
         />
 
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-          Sign in to your account
+          Login to your account
         </h2>
       </div>
+      <AuthForm />
     </div>
   );
 }
