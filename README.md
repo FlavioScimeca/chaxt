@@ -1,1 +1,3 @@
-This is a [Chaxt]() project by Flavio Scimeca
+### Not completed yet
+
+This is a [Chaxt](https://chaxt.vercel.app/) project by Flavio Scimeca
