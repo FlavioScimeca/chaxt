@@ -4,6 +4,8 @@ import { useCallback, useState } from 'react';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import Input from '../components/inputs/Input';
 import Button from './Button';
+import AuthSocialButton from './AuthSocialButton';
+import { BsGithub, BsGoogle } from 'react-icons/bs';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -53,10 +55,11 @@ export default function AuthForm() {
         <form className=" space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant == 'REGISTER' && (
             <Input
-              id="Email"
-              label="Email"
+              id="Name"
+              label="Name"
               register={register}
               errors={errors}
+              disabled={isLoading}
             />
           )}
           <Input
@@ -65,6 +68,7 @@ export default function AuthForm() {
             type="email"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <Input
             id="password"
@@ -72,6 +76,7 @@ export default function AuthForm() {
             type="password"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <div>
             <Button disabled={isLoading} fullWidth type="submit">
@@ -79,6 +84,40 @@ export default function AuthForm() {
             </Button>
           </div>
         </form>
+
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-white px-2 text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6 flex gap-2">
+            <AuthSocialButton
+              icon={BsGithub}
+              onClick={() => socialAction('github')}
+            />
+            <AuthSocialButton
+              icon={BsGoogle}
+              onClick={() => socialAction('google')}
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
+          <div>
+            {variant == 'LOGIN' ? 'New to Chaxt?' : 'Already have an account?'}
+          </div>
+
+          <div onClick={toggleVariant} className="underline cursor-pointer">
+            {variant == 'LOGIN' ? 'Create an account' : 'Login'}
+          </div>
+        </div>
       </div>
     </div>
   );
