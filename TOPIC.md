@@ -12,3 +12,4 @@
 **clsx?**
 **tailwindcss/forms**
 **prisma**
+**globalThis**
