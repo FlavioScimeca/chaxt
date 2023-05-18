@@ -1,3 +1,4 @@
+import ToasterContext from './context/ToasterContext';
 import './globals.css';
 import { Inter } from 'next/font/google';
 
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
+        <ToasterContext />
         {children}
       </body>
     </html>

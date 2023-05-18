@@ -7,6 +7,8 @@ import Input from '../components/inputs/Input';
 import Button from './Button';
 import AuthSocialButton from './AuthSocialButton';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
+import { toast } from 'react-hot-toast';
+import { signIn } from 'next-auth/react';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -39,21 +41,50 @@ export default function AuthForm() {
 
     if (variant == 'REGISTER') {
       // Axios Register
-      axios.post('/api/register', data);
+      axios
+        .post('/api/register', data)
+        .catch(() => toast.error('Something went wrong'))
+        .finally(() => setIsLoading(false));
     }
 
     if (variant == 'LOGIN') {
       // NextAuth Login
+      signIn('credentials', {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error('Invalid credentials');
+          }
+
+          if (callback?.ok && !callback?.error) {
+            toast.success('Logged in');
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   const socialAction = (action: string) => {
     setIsLoading(true);
+
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error('Invalid credentials');
+        }
+
+        if (callback?.ok && !callback?.error) {
+          toast.success('Logged in');
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
-    <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+    <div className="mt-5 px-5 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="bg-white px-4 py-8 shadow rounded-lg sm:px-10">
         <form className=" space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant == 'REGISTER' && (
             <Input
