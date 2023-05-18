@@ -13,3 +13,5 @@
 **tailwindcss/forms**
 **prisma**
 **globalThis**
+**withAuth**
+**useMemo()**
