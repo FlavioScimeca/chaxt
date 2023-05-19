@@ -9,8 +9,8 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({ user }) => {
   return (
-    <div className="relative">
-      <div className="relative inline-block h-9 w-9 md:h-11 md:w-11">
+    <div className="relative ">
+      <div className="relative top-1 inline-block h-9 w-9 md:h-11 md:w-11">
         <Image
           className="rounded-full"
           fill
