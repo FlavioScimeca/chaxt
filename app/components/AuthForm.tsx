@@ -20,6 +20,7 @@ export default function AuthForm() {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // A function that change the Variant value
   const toggleVariant = useCallback(() => {
     if (variant == 'LOGIN') {
       setVariant('REGISTER');
@@ -28,6 +29,7 @@ export default function AuthForm() {
     }
   }, [variant]);
 
+  // React-hook-form to handle the form
   const {
     register,
     handleSubmit,
@@ -44,7 +46,7 @@ export default function AuthForm() {
     setIsLoading(true);
 
     if (variant == 'REGISTER') {
-      // Axios Register
+      // This function regist the new User and then logged it into signIn a function from next-auth/react
       axios
         .post('/api/register', data)
         .then(() => signIn('credentials', data))
@@ -53,7 +55,8 @@ export default function AuthForm() {
     }
 
     if (variant == 'LOGIN') {
-      // NextAuth Login
+      // this function simply try to log in the user and if there is any problem show an error otherwise change route to /users (that si protected by a middleware)
+      // watch @/app/api/auth/[...nextauth]/route.ts to see the backend logic
       signIn('credentials', {
         ...data,
         redirect: false,
@@ -89,6 +92,7 @@ export default function AuthForm() {
   };
 
   //? UseEffect()
+  // when we regist a new user we don't push into a new router because this useEffect()
   useEffect(() => {
     if (session?.status == 'authenticated') {
       router.push('/users');
@@ -98,7 +102,9 @@ export default function AuthForm() {
   return (
     <div className="mt-5 px-5 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="bg-white px-4 py-8 shadow rounded-lg sm:px-10">
+        {/* handleSubmit from React-hook-form wrap onSubmit and sand the -data- (look the onSubmit function) */}
         <form className=" space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          {/* Optional rendering */}
           {variant == 'REGISTER' && (
             <Input
               id="name"
